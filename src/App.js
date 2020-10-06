@@ -1,10 +1,12 @@
 import React from 'react';
-import './App.css';
 import Navigator from './components/nav/Navigator'
 import { createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
 import Header from './components/header/Header'
+import {styles, drawerWidth} from './styles'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import Main from './pages/Main'
 
 let theme = createMuiTheme({
   palette: {
@@ -63,7 +65,7 @@ theme = {
         height: 3,
         borderTopLeftRadius: 3,
         borderTopRightRadius: 3,
-        backgroundColor: theme.palette.common.white,
+        backgroundColor: theme.palette.common.black,
       },
     },
     MuiTab: {
@@ -103,7 +105,7 @@ theme = {
         color: 'inherit',
         marginRight: 0,
         '& svg': {
-          fontSize: 20,
+          fontSize: 24,
         },
       },
     },
@@ -113,35 +115,14 @@ theme = {
         height: 32,
       },
     },
+    MuiAppBar:{
+      colorPrimary:{
+        backgroundColor:"#132d54"
+      }
+    }
   },
 };
-const drawerWidth = 256;
-const styles = {
-  root: {
-    display: 'flex',
-    minHeight: '100vh',
-  },
-  drawer: {
-    [theme.breakpoints.up('sm')]: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-  },
-  app: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  main: {
-    flex: 1,
-    padding: theme.spacing(6, 4),
-    background: '#eaeff1',
-  },
-  footer: {
-    padding: theme.spacing(2),
-    background: '#eaeff1',
-  },
-};
+
 
 function App(props) {
   const { classes } = props;
@@ -152,6 +133,7 @@ function App(props) {
   };
   return (
     <ThemeProvider theme={theme}>
+      <Router>
       <div className={classes.root}>
       <CssBaseline />
       <nav className={classes.drawer}>
@@ -170,10 +152,13 @@ function App(props) {
       <div className={classes.app}>
         <Header onDrawerToggle={handleDrawerToggle} />
         <main className={classes.main}>
-          <h1>hung</h1>
+          <Switch>
+            <Route path='/' exact component={Main} />
+          </Switch>
         </main>
       </div>
       </div>
+      </Router>
     </ThemeProvider>
   );
 }

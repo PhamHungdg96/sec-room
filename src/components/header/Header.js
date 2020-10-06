@@ -1,67 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
-import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import { ListItemText } from '@material-ui/core';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Collapse from '@material-ui/core/Collapse';
-import StarBorder from '@material-ui/icons/StarBorder';
+import {styles} from './styles'
+import AlPopover from '../popover/Alarm/AlPopover';
+import UsPopover from '../popover/user/UsPopover';
 
-const lightColor = 'rgba(255, 255, 255, 0.7)';
-
-const styles = (theme) => ({
-  secondaryBar: {
-    zIndex: 0,
-  },
-  menuButton: {
-    marginLeft: -theme.spacing(1),
-  },
-  iconButtonAvatar: {
-    padding: 4,
-  },
-  link: {
-    textDecoration: 'none',
-    color: lightColor,
-    '&:hover': {
-      color: theme.palette.common.white,
-    },
-  },
-  button: {
-    borderColor: lightColor,
-  },
-  NotificationPopup:{
-        position:'absolute',
-        'will-change': 'transform',
-        top: '0px',
-        left: '0px',
-        transform: 'translate3d(692px, 56px, 0px)',
-  }
-});
 
 function Header(props) {
   const { classes, onDrawerToggle } = props;
-
   return (
     <React.Fragment>
-      <AppBar
-        component="div"
-        className={classes.secondaryBar}
-        color="primary"
-        position="static"
-        elevation={0}
+      <AppBar component="div" className={classes.secondaryBar} color="primary" position="static" elevation={0}
       >
         <Toolbar>
           <Grid container alignItems="center" spacing={1}>
@@ -83,42 +42,21 @@ function Header(props) {
               </Typography>
             </Grid>
             <Grid item>
-              <Tooltip title="Alerts • No alerts">
-                <IconButton color="inherit">
-                  <NotificationsIcon />
-                </IconButton>
-              </Tooltip>
+              <AlPopover/>
             </Grid>
             <Grid item>
-              <IconButton color="inherit" className={classes.iconButtonAvatar}>
-                <Avatar src="/static/images/avatar/1.jpg" alt="My Avatar" />
-              </IconButton>
-              <Collapse >
-                <List component="div" disablePadding>
-                <ListItem button className={classes.nested}>
-                    <ListItemIcon>
-                    <StarBorder />
-                    </ListItemIcon>
-                    <ListItemText primary="Starred" />
-                </ListItem>
-                </List>
-            </Collapse>
+              <UsPopover/>
             </Grid>
           </Grid>
         </Toolbar>
       </AppBar>
-      <AppBar
-        component="div"
-        className={classes.secondaryBar}
-        color="primary"
-        position="static"
-        elevation={0}
+      <AppBar component="div" color="info" position="static" elevation={0}
       >
         <Tabs value={0} textColor="inherit">
-          <Tab textColor="inherit" label="Users" />
-          <Tab textColor="inherit" label="Sign-in method" />
-          <Tab textColor="inherit" label="Templates" />
-          <Tab textColor="inherit" label="Usage" />
+          <Tab textColor="inherit" label="Search" />
+          <Tab textColor="inherit" label="Series" />
+          <Tab textColor="inherit" label="Featured" />
+          <Tab textColor="inherit" label="Videos" />
         </Tabs>
       </AppBar>
     </React.Fragment>
