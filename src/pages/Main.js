@@ -1,9 +1,11 @@
 import React from 'react'
+import RoomItem from '../components/roomitem/RoomItem'
+import RoomItemMedia from '../components/roomitemmedia/RoomItemMedia'
 
 function Main(props){
     return (
         <React.Fragment>
-            <h5>hung</h5>
+            <RoomItemMedia/>
         </React.Fragment>
     )
 }

@@ -50,7 +50,7 @@ function Header(props) {
           </Grid>
         </Toolbar>
       </AppBar>
-      <AppBar component="div" color="info" position="static" elevation={0}
+      <AppBar component="div" color="default" position="static" elevation={0}
       >
         <Tabs value={0} textColor="inherit">
           <Tab textColor="inherit" label="Search" />
