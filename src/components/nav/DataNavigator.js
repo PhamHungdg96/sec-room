@@ -17,7 +17,7 @@ export const menus = [
         children: [
             { id: 'Bảng xếp hạng', icon: <FaIcons.FaRegChartBar size={18}/>, path:''},
             { id: 'Forum', icon: <FaIcons.FaForumbee size={18}/>, path:'' },
-            { id: 'Chat', icon: <FaIcons.FaComments size={18}/>, path:'' },
+            { id: 'Chat', icon: <FaIcons.FaComments size={18}/>, path:'/chat' },
             { id: 'Contribute', icon: <FaIcons.FaSignLanguage size={18}/>, path:''}
         ],
     },

@@ -3,10 +3,11 @@ import Navigator from './components/nav/Navigator'
 import { createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
-import Header from './components/header/Header'
 import {styles, drawerWidth} from './styles'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import Main from './pages/Main'
+import Main from './pages/Main/Main'
+import Chat from './pages/Chat';
+import Header from './components/header/Header'
 
 let theme = createMuiTheme({
   palette: {
@@ -150,12 +151,12 @@ function App(props) {
         </Hidden>
       </nav>
       <div className={classes.app}>
-        <Header onDrawerToggle={handleDrawerToggle} />
-        <main className={classes.main}>
-          <Switch>
-            <Route path='/' exact component={Main} />
-          </Switch>
-        </main>
+          <Header onDrawerToggle={handleDrawerToggle} />
+          
+            <Switch>
+              <Route path='/' exact component={Main} />
+              <Route path='/chat' render={()=>(<Chat {...props} mobileOpen={mobileOpen} />)}/>
+            </Switch>
       </div>
       </div>
       </Router>

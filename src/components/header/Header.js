@@ -5,9 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-
-import Tab from '@material-ui/core/Tab';
-import Tabs from '@material-ui/core/Tabs';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
@@ -49,15 +46,6 @@ function Header(props) {
             </Grid>
           </Grid>
         </Toolbar>
-      </AppBar>
-      <AppBar component="div" color="default" position="static" elevation={0}
-      >
-        <Tabs value={0} textColor="inherit">
-          <Tab textColor="inherit" label="Search" />
-          <Tab textColor="inherit" label="Series" />
-          <Tab textColor="inherit" label="Featured" />
-          <Tab textColor="inherit" label="Videos" />
-        </Tabs>
       </AppBar>
     </React.Fragment>
   );

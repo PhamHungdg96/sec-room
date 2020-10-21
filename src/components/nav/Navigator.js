@@ -11,6 +11,7 @@ import {IconContext} from 'react-icons'
 import {menus} from './DataNavigator'
 import { withStyles } from '@material-ui/core';
 import {styles} from './styles'
+import { Link } from 'react-router-dom';
 
 function Navigator(props){
   const { classes, ...other } = props;
@@ -26,12 +27,14 @@ function Navigator(props){
           if(item.children === undefined){
             return (
               <React.Fragment key={id}>
-              <ListItem key={id} button className={clsx(classes.item,classes.itemActiveItem)}>
-                <ListItemIcon className={classes.itemIcon}>{item.icon}</ListItemIcon>
-                <ListItemText classes={{ primary: classes.itemPrimary, }} >
-                  {item.id}
-                </ListItemText>
-              </ListItem>
+              <Link to={item.path} className={classes.link}>
+                <ListItem key={id} button className={clsx(classes.item,classes.itemActiveItem)}>
+                    <ListItemIcon className={classes.itemIcon}>{item.icon}</ListItemIcon>
+                    <ListItemText classes={{ primary: classes.itemPrimary, }} >
+                      {item.id}
+                    </ListItemText>
+                </ListItem>
+              </Link>
               <Divider className={classes.divider} />
               </React.Fragment>
             )
@@ -44,12 +47,14 @@ function Navigator(props){
                   </ListItemText>
                 </ListItem>
                 {item.children.map((chilval, chilid) => (
-                  <ListItem key={chilid} button className={clsx(classes.item)} >
-                    <ListItemIcon className={classes.itemIcon}>{chilval.icon}</ListItemIcon>
-                    <ListItemText classes={{ primary: classes.itemPrimary, }} >
-                      {chilval.id}
-                    </ListItemText>
-                  </ListItem>
+                  <Link to={chilval.path} className={classes.link}>
+                    <ListItem key={chilid} button className={clsx(classes.item)} >
+                      <ListItemIcon className={classes.itemIcon}>{chilval.icon}</ListItemIcon>
+                      <ListItemText classes={{ primary: classes.itemPrimary, }} >
+                        {chilval.id}
+                      </ListItemText>
+                    </ListItem>
+                  </Link>
                 ))}
 
                 <Divider className={classes.divider} />
