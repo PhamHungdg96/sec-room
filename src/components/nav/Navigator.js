@@ -47,8 +47,8 @@ function Navigator(props){
                   </ListItemText>
                 </ListItem>
                 {item.children.map((chilval, chilid) => (
-                  <Link to={chilval.path} className={classes.link}>
-                    <ListItem key={chilid} button className={clsx(classes.item)} >
+                  <Link to={chilval.path} className={classes.link} key={chilid}>
+                    <ListItem button className={clsx(classes.item)} >
                       <ListItemIcon className={classes.itemIcon}>{chilval.icon}</ListItemIcon>
                       <ListItemText classes={{ primary: classes.itemPrimary, }} >
                         {chilval.id}

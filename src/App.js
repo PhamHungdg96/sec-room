@@ -4,10 +4,18 @@ import { createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core/sty
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
 import {styles, drawerWidth} from './styles'
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import Main from './pages/Main/Main'
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
+import Dashboard from './pages/Main/Dashboard'
 import Chat from './pages/Chat';
 import Header from './components/header/Header'
+import Thunk from 'redux-thunk'
+import {Provider} from 'react-redux'
+import { compose, createStore} from 'redux'
+import {MiddlewareRegistry,
+        ReducerRegistry,
+        StateListenerRegistry
+} from './redux'
+
 
 let theme = createMuiTheme({
   palette: {
@@ -124,44 +132,81 @@ theme = {
   },
 };
 
+function _createStore() {
+  // Create combined reducer from all reducers in ReducerRegistry.
+  const reducer = ReducerRegistry.combineReducers();
+
+  // Apply all registered middleware from the MiddlewareRegistry and
+  // additional 3rd party middleware:
+  // - Thunk - allows us to dispatch async actions easily. For more info
+  // @see https://github.com/gaearon/redux-thunk.
+  let middleware = MiddlewareRegistry.applyMiddleware(Thunk);
+
+  // Try to enable Redux DevTools Chrome extension in order to make it
+  // available for the purposes of facilitating development.
+  let devToolsExtension;
+
+  if (typeof window === 'object'
+          && (devToolsExtension = window.devToolsExtension)) {
+      middleware = compose(middleware, devToolsExtension());
+  }
+
+  const store = createStore(reducer, middleware);
+
+  console.log("HUNG_LOG", "CreateStore")
+  // StateListenerRegistry
+  StateListenerRegistry.subscribe(store);
+
+  return store;
+}
 
 function App(props) {
   const { classes } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  const [_store, setStore] = React.useState(undefined)
+  React.useEffect(()=>{
+    if(!_store){
+      setStore(_createStore())
+    }
+  })
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  return (
-    <ThemeProvider theme={theme}>
-      <Router>
-      <div className={classes.root}>
-      <CssBaseline />
-      <nav className={classes.drawer}>
-        <Hidden smUp implementation="js">
-          <Navigator
-            PaperProps={{ style: { width: drawerWidth } }}
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-          />
-        </Hidden>
-        <Hidden xsDown implementation="css">
-          <Navigator PaperProps={{ style: { width: drawerWidth } }} />
-        </Hidden>
-      </nav>
-      <div className={classes.app}>
-          <Header onDrawerToggle={handleDrawerToggle} />
-          
-            <Switch>
-              <Route path='/' exact component={Main} />
-              <Route path='/chat' render={()=>(<Chat {...props} mobileOpen={mobileOpen} />)}/>
-            </Switch>
-      </div>
-      </div>
-      </Router>
-    </ThemeProvider>
-  );
+  if(_store){
+    return (
+      <ThemeProvider theme={theme}>
+        <Provider store={_store}>
+          <Router>
+          <div className={classes.root}>
+          <CssBaseline />
+          <nav className={classes.drawer}>
+            <Hidden smUp implementation="js">
+              <Navigator
+                PaperProps={{ style: { width: drawerWidth } }}
+                variant="temporary"
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+              />
+            </Hidden>
+            <Hidden xsDown implementation="css">
+              <Navigator PaperProps={{ style: { width: drawerWidth } }} />
+            </Hidden>
+          </nav>
+          <div className={classes.app}>
+              <Header onDrawerToggle={handleDrawerToggle} />
+                <Switch>
+                  <Route path='/dashboard' exact component={Dashboard} />
+                  <Route path='/chat' render={()=>(<Chat {...props} mobileOpen={mobileOpen} />)}/>
+                  <Redirect from="/" to="/dashboard" />
+                </Switch>
+          </div>
+          </div>
+          </Router>
+        </Provider>
+      </ThemeProvider>
+    );
+  }
+  return (<></>);
 }
 
 export default withStyles(styles)(App);

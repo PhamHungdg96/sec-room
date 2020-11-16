@@ -1,38 +1,26 @@
 export const styles=(theme)=>({
-    paper:{
-        width:"605px",
+    root: {
+        flexGrow: 1,
     },
-    img:{
-        width:"140px",
-        height:"140px",
-        objectFit:"cover",
-        borderRadius:"7px",
-        padding:"1px"
+    paper: {
+        padding: theme.spacing(1),
+        maxWidth: 500,
     },
-    Content:{
-        textAlign:"center",
+    image:{
+        width:'128px',
     },
-    processing:{
-        marginLeft:"auto",
-        width:"15%",
-        paddingTop:theme.spacing(1),
-        paddingRight:theme.spacing(2),
+    img: {
+        margin: 'auto',
+        display: 'block',
+        maxWidth: '100%',
+        maxHeight: '100%',
     },
-    action:{
-        borderTop:"solid 1px #efefef",
-        backgroundColor:"#f7f7f7",
-        borderBottomLeftRadius:"inherit",
-        borderBottomRightRadius:"inherit",
-        padding:theme.spacing(0.75)
+    footer:{
+        textAlign: 'right',
     },
-    actionLink:{
-        backgroundColor: '#18212c',
-        color: "#b0b4b7",
-        padding: '2px',
-        borderRadius: '4px',
-        textDecorationLine: 'none',
-    },
-    views:{
-        marginLeft:"auto"
+    tag:{
+        backgroundColor: '#3333',
+        padding: '3px',
+        borderRadius: '3px',
     }
 })

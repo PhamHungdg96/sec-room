@@ -1,5 +1,5 @@
 import React from 'react';
-import {withStyles, Grid, Paper, Typography, LinearProgress} from '@material-ui/core'
+import {withStyles, Grid, Paper, Typography, LinearProgress,ButtonBase} from '@material-ui/core'
 import {styles} from './styles'
 import { Link } from 'react-router-dom';
 
@@ -25,63 +25,34 @@ function RoomItem(props){
         title:'image'
     }
     return(
-        <div>
-            <Grid container spacing={1}>
-                <Grid item xs={6} >
-                <Paper className={classes.paper} elevation={1}>
-                    <Grid container spacing={0}>
-                        <Grid item xs={3}>
-                            <img src={tile.img} alt={tile.title} className={classes.img}/>
+        <div className={classes.root}>
+            <Paper className={classes.paper}>
+                <Grid container spacing={1}>
+                    <Grid item>
+                        <ButtonBase className={classes.image}>
+                        <img className={classes.img} alt="complex" src="/images/plant.jpg" />
+                        </ButtonBase>
+                    </Grid>
+                    <Grid item xs={12} sm container>
+                        <Grid item xs container direction="column" spacing={2}>
+                            <Grid item xs>
+                                <Typography gutterBottom variant="subtitle1">
+                                Introductory Researching
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary">
+                                A brief introduction to research skills for pentesting.
+                                </Typography>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={9}>
-                            <div className={classes.processing}>
-                                <BorderLinearProgress variant="determinate" value={50}/>
-                            </div>
-                            <div className={classes.Content}>
-                                <Typography variant="h6" gutterBottom>
-                                    Heading
-                                </Typography>
-                                <Typography variant="body1" gutterBottom style={{textAlign:"left"}}>
-                                    body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur
-                                    unde suscipit, quam beatae rerum inventore consectetur...
-                                </Typography>
-                            </div>
+                        <Grid item xs={2}>
+                            <BorderLinearProgress variant="determinate" value={50}/>
                         </Grid>
                     </Grid>
-                    <Grid container className={classes.action}>
-                        <Link to="#" className={classes.actionLink}>action</Link>
-                        <span className={classes.views}>289.789</span>
-                    </Grid>
-                </Paper>
                 </Grid>
-                <Grid item xs={6} >
-                <Paper className={classes.paper} elevation={1}>
-                    <Grid container spacing={0}>
-                        <Grid item xs={3}>
-                            <img src={tile.img} alt={tile.title} className={classes.img}/>
-                        </Grid>
-                        <Grid item xs={9}>
-                            <div className={classes.processing}>
-                                <BorderLinearProgress variant="determinate" value={50}/>
-                            </div>
-                            <div className={classes.Content}>
-                                <Typography variant="h6" gutterBottom>
-                                    Heading
-                                </Typography>
-                                <Typography variant="body1" gutterBottom style={{textAlign:"left"}}>
-                                    body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur
-                                    unde suscipit, quam beatae rerum inventore consectetur...
-                                </Typography>
-                            </div>
-                        </Grid>
-                    </Grid>
-                    <Grid container className={classes.action}>
-                        <Link to="#" className={classes.actionLink}>action</Link>
-                        <span className={classes.views}>289.789</span>
-                    </Grid>
-                </Paper>
-                </Grid>
-            </Grid>
+                <div className={classes.footer}>
+                    <ButtonBase className={classes.tag}>linux</ButtonBase>
+                </div>
+            </Paper>
         </div>
     )
 }

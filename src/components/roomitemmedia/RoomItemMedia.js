@@ -9,7 +9,7 @@ function RoomItemMedia(props){
             <CardActionArea>
                 <CardMedia
                 className={classes.media}
-                image="images/plant.jpg"
+                image="/images/plant.jpg"
                 title="Contemplative Reptile"
                 />
                 <CardContent>
