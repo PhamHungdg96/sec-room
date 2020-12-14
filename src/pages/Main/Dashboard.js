@@ -3,7 +3,7 @@ import {withStyles, AppBar} from '@material-ui/core'
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import RoomItemMedia from '../../components/roomitemmedia/RoomItemMedia'
-import RoomItem from '../../components/roomitem/RoomItem'
+import {ListRoomItem} from './ListRoomItem/index'
 import {styles} from './styles'
 import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom'
 function Dashboard(props){
@@ -24,7 +24,7 @@ function Dashboard(props){
             </AppBar>
             <main className={classes.main}>
                 <Switch>
-                    <Route path={`${path}`} exact component={RoomItem} />
+                    <Route path={`${path}`} exact component={ListRoomItem} />
                     <Route path={`${path}/series`} exact component={RoomItemMedia} />
                 </Switch>
             </main>

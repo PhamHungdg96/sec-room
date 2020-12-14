@@ -6,7 +6,7 @@ declare type NameReducerMap<S, A> = {[name: string]: Reducer<S, A>};
 class ReducerRegistry{
     _element: NameReducerMap<*, *>;
     constructor(){
-        this._element=[]
+        this._elements=[]
     }
     combineReducers(additional: NameReducerMap<*, *> = {}) {
         // $FlowExpectedError
