@@ -30,10 +30,53 @@ axios.interceptors.request.use(
 function _mapDispatchToProps(dispatch: Dispatch<any>) {
     return{
         load_data(){
-            const { data } = axios.get(`${apiUrl}/api/courses/`)
-            .then(res => res.data)
-            .then(data => {
-                return dispatch(Load_data(data));
+            axios({
+                url:"http://45.32.252.246:8000/api/token/",
+                headers:{
+                    "Content-Type":'application/json'
+                },
+                method:'POST',
+                data:JSON.stringify({
+                    "username":"admin",
+                    "password":"123456aA@"
+                })
+            })
+            .then(res=>{
+                // console.log(res.data)
+                setCookie("app-token",JSON.stringify(res.data),1);
+            })
+            .catch(error => {
+            })
+            console.log(JSON.parse(getCookie("app-token")).access)
+            axios({
+                url:"http://45.32.252.246:8000/api/courses/",
+                method:'GET',
+                headers:{
+                    'Authorization': "Bearer "+JSON.parse(getCookie("app-token")).access
+                }
+            })
+            .then(res => {
+                console.log(res)
+                if(res.error) {
+                    throw(res.error);
+                }
+                var rooms=[]
+                function gettag(categories){
+                    var tags=[]
+                    categories.map(item=>{
+                        tags.push(item.name)
+                    })
+                    return tags
+                }
+                res.data.map(item=>{
+                    rooms.push({
+                        img: item.logo,
+                        title: item.name,
+                        content: item.description,
+                        tag: gettag(item.categories),
+                    })
+                })
+                return dispatch(Load_data(rooms));
             })
             .catch(error => {
                 console.log(error)
