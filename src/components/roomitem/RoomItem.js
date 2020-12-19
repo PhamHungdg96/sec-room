@@ -20,24 +20,24 @@ const BorderLinearProgress = withStyles((theme) => ({
 
 function RoomItem(props){
     const {classes}=props
-    const {img, title, content}=props
+    const {logo, name, description}=props
     return(
         <div className={classes.root}>
             <Paper className={classes.paper}>
                 <Grid container spacing={1}>
                     <Grid item>
                         <ButtonBase className={classes.image}>
-                        <img className={classes.img} alt="complex" src={img} />
+                        <img className={classes.img} alt="complex" src={logo} />
                         </ButtonBase>
                     </Grid>
                     <Grid item xs={12} sm container>
                         <Grid item xs container direction="column" spacing={2}>
                             <Grid item xs>
                                 <Typography gutterBottom variant="subtitle1">
-                                {title}
+                                {name}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
-                                {content}
+                                {description}
                                 </Typography>
                             </Grid>
                         </Grid>

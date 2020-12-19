@@ -15,7 +15,9 @@ import {MiddlewareRegistry,
         ReducerRegistry,
         StateListenerRegistry
 } from './redux'
+import axios from 'axios';
 
+const apiUrl = 'http://127.0.0.1:8000'
 
 let theme = createMuiTheme({
   palette: {
@@ -164,14 +166,77 @@ function App(props) {
   const { classes } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [_store, setStore] = React.useState(undefined)
+  const storedJwt = localStorage.getItem('user_token');
+  const storedRefreshJwt = localStorage.getItem('refresh_token');
+  // const [_Jwt, setJwt] = React.useState(storedJwt || null);
+  const [_RefreshJwt, setRefreshJwt] = React.useState(storedRefreshJwt || null);
+
+  const getJwt = async () => {
+    var bodyFormData = new FormData();
+    bodyFormData.append('username', 'devil');
+    bodyFormData.append('password', '123');
+
+    await axios({
+      method: 'post',
+      url: `${apiUrl}/api/token/`,
+      data: bodyFormData,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    .then(response => response.data)
+    .then(data => {
+      localStorage.setItem('user_token',data.access);
+      localStorage.setItem('refresh_token',data.refresh);
+      // setJwt(data.access);
+    })
+    .catch(function (response) {
+      console.log(response);
+    });
+  }
+
+  const refreshJwt = async () => {
+    var bodyFormData = new FormData();
+    bodyFormData.append('refresh', _RefreshJwt);
+
+    await axios({
+      method: 'post',
+      url: `${apiUrl}/api/token/refresh/`,
+      data: bodyFormData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        
+      }
+    })
+    .then(response => response.data)
+    .then(data => {
+      localStorage.setItem('refresh_token',data.refresh);
+      // setJwt(data.access);
+    })
+    .catch(function (response) {
+      console.log(response);
+    });
+  }
+
   React.useEffect(()=>{
     if(!_store){
       setStore(_createStore())
     }
+    
   })
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  // if(!_Jwt){
+  //   getJwt();
+  // } else {
+  //    if(!_RefreshJwt){
+  //     getJwt();
+  //    } else {
+  //     refreshJwt();
+  //    }
+  // }
+  getJwt();
   if(_store){
     return (
       <ThemeProvider theme={theme}>

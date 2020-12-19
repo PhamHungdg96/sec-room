@@ -3,75 +3,43 @@ import RoomItem from '../../../components/roomitem/RoomItem'
 import { connect as reactReduxConnect } from '../../../redux';
 import {Load_data} from './action'
 import type { Dispatch } from 'redux';
-import {setCookie, getCookie} from '../../../redux'
-import axios from 'axios'
+import axios from 'axios';
 function _mapStateToProps(state) {
     return {
         rooms:state['Main/ListRoom'].rooms
     };
 }
+
+const apiUrl = 'http://127.0.0.1:8000'
+
+axios.interceptors.request.use(
+    config => {
+        const { origin } = new URL(config.url);
+        const allowedOrigins = [apiUrl];
+        const token = localStorage.getItem('user_token');
+        if (allowedOrigins.includes(origin)) {
+            config.headers.authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    error => {
+        return Promise.reject(error);
+    }
+  );
+
 function _mapDispatchToProps(dispatch: Dispatch<any>) {
-    return {
-        
+    return{
         load_data(){
-            // const _data = new FormData();
-            // _data.append('username', "admin");
-            // _data.append('password', "1234546aA@");
-            // axios({
-            //     url:"http://45.32.252.246:8000/api/token",
-            //     headers:{
-            //         "Content-Type":'application/json'
-            //     },
-            //     method:'POST',
-            //     data:_data
-            // })
-            // .then(res=>{
-            //     console.log(res.access)
-            //     setCookie("token",res.access,1);
-            // })
-            // .catch(error => {
-            // })
-            setCookie("token",JSON.stringify({'username':"admin",
-            'password':"1234546aA@"}),1);
-            console.log(getCookie("token"))
-            axios({
-                url:"http://45.32.252.246:8000/api/courses/",
-                method:'GET'
-            })
-            .then(res => {
-                console.log(res)
-                if(res.error) {
-                    throw(res.error);
-                }
-                var rooms=[]
-                function gettag(categories){
-                    var tags=[]
-                    categories.map(item=>{
-                        tags.push(item.name)
-                    })
-                    return tags
-                }
-                res.data.map(item=>{
-                    rooms.push({
-                        img: item.logo,
-                        title: item.name,
-                        content: item.description,
-                        tag: gettag(item.categories),
-                    })
-                })
-                return dispatch(Load_data(rooms));
+            const { data } = axios.get(`${apiUrl}/api/courses/`)
+            .then(res => res.data)
+            .then(data => {
+                return dispatch(Load_data(data));
             })
             .catch(error => {
-            })
-            // const rooms=[{
-            //     img:'/images/plant.jpg',
-            //     title:'Introductory Hung',
-            //     content:'A brief introduction to Hung new store',
-            //     tag:['linux']
-            // }]
-            
+                console.log(error)
+            });
         }
-    };
+    } 
 }
 
 class ListRoomItem extends React.Component{
