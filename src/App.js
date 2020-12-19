@@ -17,7 +17,7 @@ import {MiddlewareRegistry,
 } from './redux'
 import axios from 'axios';
 
-const apiUrl = 'http://127.0.0.1:8000'
+const apiUrl = 'http://45.32.252.246:8000'
 
 let theme = createMuiTheme({
   palette: {
@@ -173,8 +173,8 @@ function App(props) {
 
   const getJwt = async () => {
     var bodyFormData = new FormData();
-    bodyFormData.append('username', 'devil');
-    bodyFormData.append('password', '123');
+    bodyFormData.append('username', 'admin');
+    bodyFormData.append('password', '123456aA@');
 
     await axios({
       method: 'post',
