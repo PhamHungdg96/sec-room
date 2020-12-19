@@ -14,29 +14,30 @@ function _mapDispatchToProps(dispatch: Dispatch<any>) {
     return {
         
         load_data(){
-            // const _data = new FormData();
-            // _data.append('username', "admin");
-            // _data.append('password', "1234546aA@");
-            // axios({
-            //     url:"http://45.32.252.246:8000/api/token",
-            //     headers:{
-            //         "Content-Type":'application/json'
-            //     },
-            //     method:'POST',
-            //     data:_data
-            // })
-            // .then(res=>{
-            //     console.log(res.access)
-            //     setCookie("token",res.access,1);
-            // })
-            // .catch(error => {
-            // })
-            setCookie("token",JSON.stringify({'username':"admin",
-            'password':"1234546aA@"}),1);
-            console.log(getCookie("token"))
+            axios({
+                url:"http://45.32.252.246:8000/api/token/",
+                headers:{
+                    "Content-Type":'application/json'
+                },
+                method:'POST',
+                data:JSON.stringify({
+                    "username":"admin",
+                    "password":"123456aA@"
+                })
+            })
+            .then(res=>{
+                // console.log(res.data)
+                setCookie("app-token",JSON.stringify(res.data),1);
+            })
+            .catch(error => {
+            })
+            console.log(JSON.parse(getCookie("app-token")).access)
             axios({
                 url:"http://45.32.252.246:8000/api/courses/",
-                method:'GET'
+                method:'GET',
+                headers:{
+                    'Authorization': "Bearer "+JSON.parse(getCookie("app-token")).access
+                }
             })
             .then(res => {
                 console.log(res)
